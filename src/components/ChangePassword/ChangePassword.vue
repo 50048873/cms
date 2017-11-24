@@ -1,19 +1,19 @@
 <template>
 	<el-dialog
             class="loginDialog"
-            title="登录框"
+            title="修改密码"
             :visible.sync="dialogVisible"
             size="tiny">
         <el-row type="flex" justify="center" class="mb-15">
-            <label class="label">请输入账号</label>
+            <label class="label">请输入旧密码</label>
             <el-col :span="10">
-                <el-input v-model="username" placeholder="请输入账号"></el-input>
+                <el-input v-model="oldPassword" placeholder="请输入旧密码"></el-input>
             </el-col>
         </el-row>
         <el-row type="flex" justify="center">
-            <label class="label">请输入密码</label>
+            <label class="label">请输入新密码</label>
             <el-col :span="10">
-                <el-input v-model="password" placeholder="请输入密码"></el-input>
+                <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
             </el-col>
         </el-row>
         <span slot="footer" class="dialog-footer">
@@ -31,8 +31,8 @@
 		data () {
 			return {
 				dialogVisible: true,
-				username: 'admin',
-				password: '123456',
+				oldPassword: '',
+				newPassword: '',
 			}
 		},
 		methods: { 
@@ -46,7 +46,7 @@
 	                this.$emit('loginSuccess', this.username)
 	                this.$router.push('home')
                 } else { 
-                	this.$alert('用户名或密码错误！')
+                	this.$alert('密码修改失败！')
                 }
                 
                 /*$.ajax({
@@ -70,24 +70,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scope>
-	.header {
-		height: 50px;
-		background-color: #1f2d3d;
-		color: #fff;
-		position: relative;
-		.userInfo {
-			position: absolute;
-			top: 0;
-			right: 0;
-			a {
-				display: inline-block;
-				padding: 10px;
-				line-height: 30px;
-				color: #fff;
-			}
-		}
-	}
-
 	.loginDialog {
 		.mb-15 {
 			margin-bottom: 15px;

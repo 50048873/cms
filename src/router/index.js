@@ -17,24 +17,26 @@ export default new Router({
 		},
 		{
 			path: '/login',
-			name: 'LoginDialog',
+			name: 'login',
 			component: LoginDialog
 		},
 		{
 			path: '/home',
-			name: 'Home',
+			name: 'home',
 			component: Home,
 			redirect: '/home/publishNews',
 			children: [
-		        {
-		          path: 'publishNews',
-		          component: PublishNews
-		        },
-		        {
-		          path: 'other',
-		          component: Other
-		        }
-		    ]
+				{
+					path: 'publishNews',
+					name: 'publishNews',
+					component: PublishNews
+				},
+				{
+					path: 'other',
+					name: 'other',
+					component: Other
+				}
+			]
 		}
 	]
 })

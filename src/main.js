@@ -11,10 +11,14 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 
+//var vm = new Vue();
+
 /* eslint-disable no-new */
 new Vue({
   el: '#wrap',
+  //parent: vm,
   router,
   template: '<App/>',
   components: { App }
 })
+

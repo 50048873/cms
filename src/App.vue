@@ -1,11 +1,10 @@
 <template>
 	<div id="app">
-		<router-view></router-view>
+		<router-view @loginSuccess="loginSuccess"></router-view>
 	</div>
 </template>
 
 <script>
-	import LoginDialog from '@/components/LoginDialog/LoginDialog'
 	import CmsHeader from '@/components/Header/Header'
 	import CmsNav from '@/components/Nav/Nav'
 	export default {
@@ -13,12 +12,11 @@
 		data () { 
 			return { 
 				isLogin: false,
-				username: 'test',
+				username: '',
 			}
 		},
 		components: { 
 			CmsHeader,
-			LoginDialog,
 			CmsNav
 		},
 		methods: { 

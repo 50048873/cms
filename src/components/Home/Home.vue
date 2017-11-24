@@ -1,35 +1,42 @@
 <template>
-		<div>
-			<cms-header :isLogin="isLogin" :username="this.$route.params.username"></cms-header>
-			<cms-nav></cms-nav>
-			<router-view></router-view>
-		</div>
+	<div>
+		<cms-header :isLogin="isLogin" :username="this.$parent.username" @changePassword="changePassword"></cms-header>
+		<cms-nav></cms-nav>
+		<router-view></router-view>
+		<change-password v-if="isChangingPassword"></change-password>
+	</div>
 </template>
 
 <script>
 	import CmsHeader from '@/components/Header/Header'
 	import CmsNav from '@/components/Nav/Nav'
+	import ChangePassword from '@/components/ChangePassword/ChangePassword'
 	export default {
 		name: 'app',
 		data () { 
 			return { 
-				
+				isChangingPassword: false
 			}
 		},
 		computed: { 
 			isLogin () { 
-				return this.$route.params.username ? true : false
+				return this.$parent.username ? true : false
 			}
 		},
 		components: { 
 			CmsHeader,
-			CmsNav
+			CmsNav,
+			ChangePassword
 		},
 		methods: { 
-			
+			changePassword () { 
+				this.isChangingPassword = true
+			}
 		},
 		created () { 
-
+			if (!this.isLogin) { 
+				this.$router.push('/login')
+			}
 		}
 	}
 </script>
