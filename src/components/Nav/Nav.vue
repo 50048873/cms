@@ -8,7 +8,6 @@
 				{{item.name}}
 			</router-link>
 		</li>
-		
 	</ul>
 </template>
 
@@ -21,11 +20,11 @@
 				menu: [ 
 					{ 
 						name: '发布通知',
-						href: 'publishNews'
+						href: '/home/publishNews'
 					},
 					{ 
 						name: '其它菜单',
-						href: 'other'
+						href: '/home/other'
 					}
 				]
 			}
