@@ -1,5 +1,6 @@
 <template>
 	<div class="header">
+		<img class="logo" src="../../assets/img/logo.png" alt="">
 		<div class="userInfo">
 			<span v-if="!isLogin">登录</span>
 	        <span v-if="isLogin">欢迎您：{{username}}</span>
@@ -35,7 +36,7 @@
                     url: config.HOST + '/admin/logout.do'
                 }).then((res) => { 
                 	console.log(res);
-                	if (res.success === config.SUCCESS) { 
+                	if (res.success === config.rspCode) { 
                 		
                 		
                 	} else { 
@@ -55,11 +56,19 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scope>
+	@import '../../assets/less/varialbe.less';
 	.header {
-		height: 50px;
+		height: @header-height;
+		line-height: @header-height;
 		background-color: #1f2d3d;
 		color: #fff;
 		position: relative;
+		.logo { 
+			position: relative;
+		    height: 70%;
+		    top: 15%;
+		    margin-left: 1em;
+		}
 		.userInfo {
 			position: absolute;
 			top: 0;

@@ -56,4 +56,9 @@
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}
+
+	.elForm { 
+		width: 80%;
+		margin: 0 auto;
+	}
 </style>

@@ -39,9 +39,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scope>
+	@import '../../assets/less/varialbe.less';
 	.nav { 
 		position: absolute;
-		top: 50px;
+		top: @header-height;
 		bottom: 0;
 		width: 150px;
 		background-color: #1f2d3d;
@@ -50,7 +51,7 @@
 		li { 
 			a { 
 				display: block;
-				line-height: 36px;
+				line-height: 42px;
 				color: white;
 				padding-left: 1em;
 				&:hover { 

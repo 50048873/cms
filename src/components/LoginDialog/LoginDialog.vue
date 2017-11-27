@@ -1,25 +1,20 @@
 <template>
 	<el-dialog
-            class="loginDialog"
             title="登录框"
             :visible.sync="dialogVisible"
-            size="tiny">
-        <el-row type="flex" justify="center" class="mb-15">
-            <label class="label">请输入账号</label>
-            <el-col :span="10">
-                <el-input v-model="username" placeholder="请输入账号"></el-input>
-            </el-col>
-        </el-row>
-        <el-row type="flex" justify="center">
-            <label class="label">请输入密码</label>
-            <el-col :span="10">
-                <el-input v-model="password" placeholder="请输入密码"></el-input>
-            </el-col>
-        </el-row>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="login">确 定</el-button>
-        </span>
+            width="30%">
+        <el-form :model="loginForm" status-icon ref="loginForm" label-width="100px" class="elForm">
+		  <el-form-item label="请输入账号" prop="oldPassword">
+			<el-input type="password" v-model="loginForm.userCode" auto-complete="off"></el-input>
+		  </el-form-item>
+		  <el-form-item label="请输入密码" prop="newPassword">
+			<el-input type="password" v-model="loginForm.password" auto-complete="off"></el-input>
+		  </el-form-item>
+		  <el-form-item>
+			<el-button type="primary" @click="login">确定</el-button>
+			<el-button @click="resetForm">重置</el-button>
+		  </el-form-item>
+		</el-form>
     </el-dialog>
 </template>
 
@@ -31,70 +26,38 @@
 		data () {
 			return {
 				dialogVisible: true,
-				username: 'admin',
-				password: '123456',
+				loginForm: { 
+					userCode: 'admin',
+					password: '123456'
+				}
 			}
 		},
 		methods: { 
             login () {
-                var params = {
-                    username: this.username,
-                    password: this.password
-                };
-                if (this.password === '123456') { 
-                	this.dialogVisible = false
-	                this.$emit('loginSuccess', this.username)
-	                this.$router.push('home')
-                } else { 
-                	this.$alert('用户名或密码错误！')
-                }
-                
-                /*$.ajax({
+                $.ajax({
                     type: 'POST',
-                    data: params,
+                    data: this.loginForm,
                     url: config.HOST + '/admin/loginPost.do'
-                }).then((res) => { 
-                	console.log(res);
-                	if (res.success === config.SUCCESS) { 
-                		
-                		
+                }).then(res => { 
+                	if (res.rspCode === config.rspCode) { 
+                		this.dialogVisible = false
+		                this.$emit('loginSuccess', this.loginForm.userCode)
+		                this.$router.push('home')
                 	} else { 
-                		//this.$alert('用户名或密码错误！')
+                		this.$alert(res.rspMsg)
                 	}
-                	
-                })*/
-            }
+                }, res => { 
+                	this.$alert('服务器出错，请联系管理员！')
+                });
+            },
+			resetForm () { 
+				this.loginForm.userCode = ''
+				this.loginForm.password = ''
+			}
 		}
 	}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scope>
-	.header {
-		height: 50px;
-		background-color: #1f2d3d;
-		color: #fff;
-		position: relative;
-		.userInfo {
-			position: absolute;
-			top: 0;
-			right: 0;
-			a {
-				display: inline-block;
-				padding: 10px;
-				line-height: 30px;
-				color: #fff;
-			}
-		}
-	}
-
-	.loginDialog {
-		.mb-15 {
-			margin-bottom: 15px;
-		}
-		.label {
-			line-height: 36px;
-			margin-right: 1em;
-		}
-	}
 </style>
