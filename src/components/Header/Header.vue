@@ -40,7 +40,7 @@
                     type: 'GET',
                     url: config.HOST + '/admin/logout.do'
                 }).then((res) => { 
-                	window.localStorage.clear()
+                	window.localStorage.removeItem('userCode')
                 	this.$router.push('/admin/login')
                 })
 			},
