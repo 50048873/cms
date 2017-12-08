@@ -1,13 +1,13 @@
 <template>
 	<div class="header">
-		<img class="logo" src="../../assets/img/logo.png" alt="">
+		<img class="logo" :src="logo" alt="">
 		<div class="userInfo">
 			<span v-if="!isLogin">登录</span>
 	        <span v-if="isLogin">欢迎您：{{username}}</span>
 	        <span>|</span>
-	        <span v-if="isLogin" @click="logout">退出</span>
+	        <span v-if="isLogin" @click="logout" class="btn">退出</span>
 	        <span>|</span>
-	        <span @click="changePassword">修改密码</span>
+	        <span @click="changePassword" class="btn">修改密码</span>
 	    </div>
 	    <slot></slot>
 	</div>
@@ -15,7 +15,7 @@
 
 <script>
 	import $ from 'jquery'
-	import * as config from '../../config/config.js'
+	import * as config from '../../api/config'
 	export default {
 		name: 'Header',
 		props: { 
@@ -28,6 +28,11 @@
 				default: false
 			}
 		},
+		data () { 
+			return { 
+				logo: '../../../cms/static/img/logo.png'
+			}
+		},
 		methods: { 
 			logout () { 
 				// 调用退出接口
@@ -35,17 +40,9 @@
                     type: 'GET',
                     url: config.HOST + '/admin/logout.do'
                 }).then((res) => { 
-                	console.log(res);
-                	if (res.success === config.rspCode) { 
-                		
-                		
-                	} else { 
-                		//this.$alert('用户名或密码错误！')
-                	}
-                	
+                	window.localStorage.clear()
+                	this.$router.push('/admin/login')
                 })
-
-                this.$router.push('/login')
 			},
 			changePassword () { 
 				this.$emit('changePassword');
@@ -78,6 +75,8 @@
 				padding: 10px;
 				line-height: 30px;
 				color: #fff;
+			}
+			.btn { 
 				cursor: pointer;
 				&:hover { 
 					text-decoration: underline;

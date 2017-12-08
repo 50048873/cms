@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<cms-header :isLogin="isLogin" :username="this.$parent.username" @changePassword="changePassword"></cms-header>
+		<cms-header :isLogin="isLogin" :username="username" @changePassword="changePassword"></cms-header>
 		<cms-nav></cms-nav>
 		<router-view></router-view>
-		<change-password v-if="isChangingPassword"></change-password>
+		<change-password @hide="hide" ref="changePassword"></change-password>
 	</div>
 </template>
 
@@ -15,12 +15,18 @@
 		name: 'app',
 		data () { 
 			return { 
+				dialogVisible: false,
 				isChangingPassword: false
 			}
 		},
 		computed: { 
 			isLogin () { 
-				return this.$parent.username ? true : false
+				return window.localStorage.getItem('userCode') ? true : false
+			},
+			username () { 
+				if (this.isLogin) { 
+					return window.localStorage.getItem('userCode')
+				}
 			}
 		},
 		components: { 
@@ -30,17 +36,20 @@
 		},
 		methods: { 
 			changePassword () { 
-				this.isChangingPassword = true
+				this.$refs.changePassword.show()
+			},
+			hide () { 
+				this.$refs.changePassword.hide()
 			}
 		},
 		created () { 
 			if (!this.isLogin) { 
-				this.$router.push('/login')
+				this.$router.push('/admin/login')
 			}
 		}
 	}
 </script>
 
-<style lang="less">
-	
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="less" scope>
 </style>

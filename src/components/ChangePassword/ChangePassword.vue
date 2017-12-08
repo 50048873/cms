@@ -2,7 +2,8 @@
 	<el-dialog
 		title="修改密码"
 		:visible.sync="dialogVisible"
-		width="30%">
+		width="30%"
+		@close="hide">
 		<el-form :model="passwordForm" status-icon ref="passwordForm" label-width="100px" class="elForm">
 		  <el-form-item label="旧密码" prop="oldPassword">
 			<el-input type="password" v-model="passwordForm.oldPassword" auto-complete="off"></el-input>
@@ -19,13 +20,13 @@
 </template>
 
 <script>
-	import * as config from '../../config/config.js'
+	import * as config from '../../api/config'
 	import $ from 'jquery'
 	export default {
 		name: 'Header',
 		data () {
 			return {
-				dialogVisible: true,
+				dialogVisible: false,
 				passwordForm: {
 		          oldPassword: '',
 		          newPassword: '',
@@ -33,20 +34,23 @@
 			}
 		},
 		methods: { 
+			show () { 
+				this.dialogVisible = true
+			},
+			hide () { 
+				this.dialogVisible = false
+			},
 			changePassword () {
 				$.ajax({
 					type: 'POST',
 					data: this.passwordForm,
 					url: config.HOST + '/admin/updatePassword.do'
 				}).then((res) => { 
-
 					if (res.rspCode === config.rspCode) { 
 						this.$alert('密码修改成功，请重新登录！', res.rspMsg, {
 				          confirmButtonText: '确定',
 				          callback: action => {
-				            this.dialogVisible = false
-							this.$emit('changePasswordSuccess', this.newPassword)
-							this.$router.push('/login')
+							this.$router.push('/admin/login')
 				          }
 				        });
 						

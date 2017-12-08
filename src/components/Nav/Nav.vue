@@ -12,6 +12,8 @@
 </template>
 
 <script>
+	const PATH1 = '/index/publishNews'
+	const PATH2 = '/index/newsMarquee'
 	export default {
 		name: 'Nav',
 		data () { 
@@ -19,12 +21,12 @@
 				currentIndex: 0,
 				menu: [ 
 					{ 
-						name: '发布通知',
-						href: '/home/publishNews'
+						name: '集团公告发布',
+						href: PATH1
 					},
 					{ 
-						name: '其它菜单',
-						href: '/home/other'
+						name: '首页滚动消息',
+						href: PATH2
 					}
 				]
 			}
@@ -32,6 +34,11 @@
 		methods: { 
 			toggleNav (index) { 
 				this.currentIndex = index
+			}
+		},
+		created () { 
+			if (this.$route.path === PATH2) { 
+				this.currentIndex = 1
 			}
 		}
 	}

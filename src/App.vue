@@ -1,30 +1,12 @@
 <template>
 	<div id="app">
-		<router-view @loginSuccess="loginSuccess"></router-view>
+		<router-view></router-view>
 	</div>
 </template>
 
 <script>
-	import CmsHeader from '@/components/Header/Header'
-	import CmsNav from '@/components/Nav/Nav'
 	export default {
-		name: 'app',
-		data () { 
-			return { 
-				isLogin: false,
-				username: '',
-			}
-		},
-		components: { 
-			CmsHeader,
-			CmsNav
-		},
-		methods: { 
-			loginSuccess (username) { 
-				this.isLogin = true
-				this.username = username
-			}
-		}
+		name: 'app'
 	}
 </script>
 
@@ -60,5 +42,13 @@
 	.elForm { 
 		width: 80%;
 		margin: 0 auto;
+	}
+
+	.fr { 
+		float: right;
+	}
+
+	.m-l-15 { 
+		margin-left: 15px;
 	}
 </style>

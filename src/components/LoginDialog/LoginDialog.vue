@@ -19,8 +19,9 @@
 </template>
 
 <script>
-	import * as config from '../../config/config.js'
+	import * as config from '../../api/config'
 	import $ from 'jquery'
+	import {expired} from '@/assets/js/tool'
 	export default {
 		name: 'Header',
 		data () {
@@ -41,10 +42,11 @@
                 }).then(res => { 
                 	if (res.rspCode === config.rspCode) { 
                 		this.dialogVisible = false
-		                this.$emit('loginSuccess', this.loginForm.userCode)
-		                this.$router.push('home')
+		                //this.$emit('loginSuccess', this.loginForm.userCode)
+		                window.localStorage.setItem('userCode', this.loginForm.userCode)
+		                this.$router.push('/index/publishNews')
                 	} else { 
-                		this.$alert(res.rspMsg)
+                		this.$alert(res.rspMsg || '登录失败，请联系管理员！')
                 	}
                 }, res => { 
                 	this.$alert('服务器出错，请联系管理员！')
